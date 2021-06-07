@@ -2,19 +2,29 @@
 	<div id="product-list-one">
 		<h2>Product List One</h2>
 		<ul>
-			<li v-for="product in products" v-bind:key="product.name">
+			<li v-for="product in saleProducts" v-bind:key="product.name">
 				<span class="name">{{ product.name }}</span>
 				<span class="price">${{ product.price }}</span>
 			</li>
 		</ul>
+		<button v-on:click="reducePrice">Reduce Price</button>
 	</div>
 </template>
 
 <script>
 export default {
-	props: ["products"],
-	data() {
-		return {};
+	computed: {
+		products() {
+			return this.$store.state.products;
+		},
+		saleProducts() {
+			return this.$store.getters.saleProducts;
+		},
+	},
+	methods: {
+		reducePrice: function () {
+			this.$store.commit('reducePrice')
+		},
 	},
 };
 </script>
